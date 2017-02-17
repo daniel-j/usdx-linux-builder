@@ -82,8 +82,6 @@ main() {
 	mv -v ${build_path}/lib ${output_path}/${libpath}
 	cp -r ${build_path}/share/ultrastardx/* ${output_path}
 	rm -r ${build_path}/share/ultrastardx
-	cp -v launch.sh ${output_path}
-	mkdir -p ${output_path}/songs
 
 	chown 1000:1000 ${output_path} -R
 }

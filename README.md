@@ -12,9 +12,11 @@ First you need to install a few dependencies:
 
 `chroot debootstrap curl`
 
+This requires about 5GB free space.
+
 To build the game, run `make`.
 
-This will download the version of the game specified in the Makefile, and then proceeds to set up chroots and compile the game. It then compresses it to a file. It requires about 5GB free space.
+This will download the version of the game specified in the Makefile, and then proceeds to set up chroots and compile the game. It then compresses it to a file.
 
 To just download the source code, run `make source`.
 
