@@ -82,12 +82,6 @@ main() {
 	mkdir -p ${output_path}/songs
 
 	chown 1000:1000 ${output_path} -R
-
-	#mv ${chroot_dir}/runtime ${output_path}/${libpath}
-	#cp -d extra/${libpath}/* ${output_path}/${libpath}
-	#cd ${output_path}
-	#
-	#tar czf lutris-runtime-${arch}.tar.gz $libpath
 }
 
 main $@

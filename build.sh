@@ -19,6 +19,5 @@ do
 	cp -v "$file" output/usr/local/lib/
 done
 
-
 rm -f output/usr/local/lib/libglib*
 rm -f output/usr/local/lib/libasound*
