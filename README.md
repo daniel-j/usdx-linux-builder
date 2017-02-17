@@ -16,9 +16,9 @@ To build the game, run `make`.
 
 This will download the version of the game specified in the Makefile, and then proceeds to set up chroots and compile the game. It then compresses it to a file. It requires about 5GB free space.
 
-To just download the source code, run `make USDX-src.tar.gz`.
+To just download the source code, run `make source`.
 
-When the source is downloaded you can rebuild the game for 32-bit or 64-bit by running `sudo ./setup.sh --i386` or `sudo ./setup.sh --amd64`.
+You can build the game for 32-bit or 64-bit by running `make build-32` or `make build-64`.
 
 To clean up, run `make clean`. This will only remove the built compressed file and build dir.
 

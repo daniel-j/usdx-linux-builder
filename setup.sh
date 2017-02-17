@@ -13,6 +13,10 @@ create_chroot() {
 	arch=$2
 	chroot_dir="${chroot_path}/${release}-${arch}"
 	if [ ! -e ${chroot_dir} ]; then
+		if ! type "debootstrap" > /dev/null 2>&1; then
+			echo "Error: debootstrap is not installed"
+			exit 1
+		fi
 		mkdir -p ${chroot_dir}
 		echo ${release} ${chroot_dir} ${repo}
 		debootstrap --arch=${arch} ${release} ${chroot_dir} ${repo}
