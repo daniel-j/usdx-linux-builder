@@ -24,4 +24,6 @@ To clean up, run `make clean`. This will only remove the built compressed file a
 
 To do a complete clean, run `make cleanfull`. This will delete the chroots and downloaded sourcecode, along with the built game. Run this when you want to free disk space.
 
-`build.sh` is copied into the chroot and it is what builds the game and gathers libraries. `launch.sh` is copied to the game dir after build and it is what you use to launch the game.
+`build.sh` is copied into the chroot and it is what builds the game and gathers libraries.
+
+`launch.sh` is copied to the game dir after build and it is what you use to launch the game.
