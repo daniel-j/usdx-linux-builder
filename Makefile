@@ -11,7 +11,7 @@ USDX-src.tar.gz:
 
 build-32: usdx/ultrastardx.x86
 usdx/ultrastardx.x86: USDX-src.tar.gz
-	sudo ./setup.sh --i386
+	sudo linux32 ./setup.sh --i386
 
 build-64: usdx/ultrastardx.x86_64
 usdx/ultrastardx.x86_64: USDX-src.tar.gz

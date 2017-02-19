@@ -8,7 +8,7 @@ cd USDX-*
 pwd
 
 ./configure
-make LDFLAGS="-O2 --sort-common --as-needed -z relro -shared-libgcc" datadir="./data" prefix="" bindir="" INSTALL_DATADIR="./data"
+make LDFLAGS="-O2 --sort-common --as-needed -z relro -shared-libgcc -rpath \\\$\$ORIGIN/$1" datadir="./data" prefix="" bindir="" INSTALL_DATADIR="./data"
 make DESTDIR="output/" datadir="/data" prefix="" bindir="" INSTALL_DATADIR="./data" install
 
 mkdir -p output/lib

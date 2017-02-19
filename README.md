@@ -10,7 +10,7 @@ How to use
 
 First you need to install a few dependencies:
 
-`chroot debootstrap curl`
+`chroot debootstrap curl linux32`
 
 This requires about 5GB free space.
 

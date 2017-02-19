@@ -44,7 +44,7 @@ run_chroot() {
 	chroot_dir=$1
 	chroot ${chroot_dir} ldconfig
 	echo "Running build..."
-	chroot ${chroot_dir} /build.sh
+	chroot ${chroot_dir} /build.sh $2
 }
 
 main() {
@@ -72,7 +72,7 @@ main() {
 	create_chroot ${release} ${arch}
 	chroot_dir="${chroot_path}/${release}-${arch}"
 	configure_chroot $chroot_dir
-	run_chroot $chroot_dir
+	run_chroot $chroot_dir $libpath
 
 	rm -rf ${output_path}/${libpath} "${output_path}/ultrastardx.${suffix}"
 

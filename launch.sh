@@ -11,17 +11,15 @@ cd "`dirname "$GAMEPATH"`"
 MACHINE=`uname -m`
 if [ "$MACHINE" = "x86_64" ]
 then
-	# Set path to libraries and binary (64 bit)
-	LIBPATH=./lib64
+	# Set path to binary (64 bit)
 	BIN=./ultrastardx.x86_64
 else
 	# Default to x86. If it's not x86, it might be able to emulate it.
-	LIBPATH=./lib32
 	BIN=./ultrastardx.x86
 fi
 
 # Run the game, (optionally) with the debugger
-LIBGL_DRI3_DISABLE=1 LD_LIBRARY_PATH="$LIBPATH:$LD_LIBRARY_PATH" $DEBUGGER $BIN $@
+LIBGL_DRI3_DISABLE=1 $DEBUGGER $BIN $@
 
 # Get the game's exit code, and return it.
 e=$?
