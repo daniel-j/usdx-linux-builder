@@ -19,6 +19,7 @@ usdx/ultrastardx.x86_64: USDX-src.tar.gz
 
 build: usdx/BUILD_DATE
 usdx/BUILD_DATE: usdx/ultrastardx.x86 usdx/ultrastardx.x86_64
+	mkdir -p usdx/data/songs
 	cp -v launch.sh usdx/
 	echo "`date -u +%FT%TZ`" > usdx/BUILD_DATE
 	echo "$(VERSION)" > usdx/VERSION

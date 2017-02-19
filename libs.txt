@@ -1,25 +1,26 @@
 ultrastardx
   libsqlite3.so.0
-    libdl.so.2
   libSDL2-2.0.so.0
-    libm.so.6
     libpulse.so.0
       libjson-c.so.2
       libpulsecommon-8.0.so
         libxcb.so.1
           libXau.so.6
           libXdmcp.so.6
+        libsystemd.so.0
+          libselinux.so.1
+            libpcre.so.3
+          liblzma.so.5
+          libgcrypt.so.20
+            libgpg-error.so.0
         libwrap.so.0
-          libnsl.so.1
         libsndfile.so.1
           libFLAC.so.8
             libogg.so.0
           libvorbisenc.so.2
             libvorbis.so.0
         libasyncns.so.0
-          libresolv.so.2
         libdbus-1.so.3
-        librt.so.1
     libsndio.so.6.1
       libbsd.so.0
     libX11.so.6
@@ -42,11 +43,11 @@ ultrastardx
       libz.so.1
     libjpeg.so.8
     libtiff.so.5
-      liblzma.so.5
       libjbig.so.0
     libwebp.so.5
   libSDL2_mixer-2.0.so.0
     libmodplug.so.1
+      libstdc++.so.6
     libfluidsynth.so.1
       libjack.so.0
         libdb-5.3.so
@@ -86,8 +87,6 @@ ultrastardx
     libcrystalhd.so.3
   libavformat-ffmpeg.so.56
     libssh-gcrypt.so.4
-      libgcrypt.so.20
-        libgpg-error.so.0
       libgssapi_krb5.so.2
         libkrb5.so.3
           libk5crypto.so.3
