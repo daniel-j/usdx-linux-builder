@@ -8,10 +8,10 @@ cd USDX-*
 pwd
 
 ./configure
-make LDFLAGS="-O2 --sort-common --as-needed -z relro -shared-libgcc"
-make DESTDIR="output" install
+make LDFLAGS="-O2 --sort-common --as-needed -z relro -shared-libgcc" datadir="./data" prefix="" bindir="" INSTALL_DATADIR="./data"
+make DESTDIR="output/" datadir="/data" prefix="" bindir="" INSTALL_DATADIR="./data" install
 
-mkdir -p output/usr/local/lib
+mkdir -p output/lib
 
 scan_libs() {
 	local libs=$(objdump -x "$1" | awk '$1 == "NEEDED" { print $2 }' | grep -E -v 'libpthread|(libc[^_a-zA-Z0-9])|libasound|libglib|libgcc_s|libsystemd|ld-linux|libstdc')
@@ -25,9 +25,9 @@ scan_libs() {
 	while read -r file
 	do
 		local filepath=$(echo "$lddoutput" | grep -F "$file" | awk '{print $3}')
-		if [ -e "$filepath" ] && [ ! -e "output/usr/local/lib/$file" ]; then
+		if [ -e "$filepath" ] && [ ! -e "$2/$file" ]; then
 			echo "$indent$file"
-			cp "$filepath" "$2"
+			cp "$filepath" "$2/"
 			scan_libs "$filepath" "$2" "$indent"
 		fi
 		if [ ! -e "$filepath" ]; then
@@ -36,7 +36,7 @@ scan_libs() {
 	done <<< "$libs"
 }
 echo "Scanning and copying libraries..."
-scan_libs game/ultrastardx output/usr/local/lib/
+scan_libs game/ultrastardx output/lib
 
 #IFS=$'\n' # make newlines the only separator
 #for file in $(ldd output/usr/local/bin/ultrastardx | awk '{print $3}' | grep -w "so")

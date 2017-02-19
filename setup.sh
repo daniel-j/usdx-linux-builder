@@ -76,14 +76,15 @@ main() {
 
 	rm -rf ${output_path}/${libpath} "${output_path}/ultrastardx.${suffix}"
 
-	build_path="${chroot_dir}/USDX/USDX-*/output/usr/local"
+	build_path="${chroot_dir}/USDX/USDX-*/output"
+	mkdir -p ${output_path}/data
 
-	mv -v ${build_path}/bin/ultrastardx "${output_path}/ultrastardx.${suffix}"
+	mv -v ${build_path}/ultrastardx "${output_path}/ultrastardx.${suffix}"
 	mv -v ${build_path}/lib ${output_path}/${libpath}
-	cp -r ${build_path}/share/ultrastardx/* ${output_path}
-	rm -r ${build_path}/share/ultrastardx
+	cp -r ${build_path}/data/* ${output_path}/data
+	rm -r ${build_path}/data
 
-	chown 1000:1000 ${output_path} -R
+	chown $SUDO_UID:$SUDO_GID ${output_path} -R
 }
 
 main $@
