@@ -2,7 +2,7 @@
 
 set -e
 
-repo="http://archive.ubuntu.com/ubuntu/"
+repo="http://archive.ubuntu.com/ubuntu"
 release="xenial"
 
 chroot_path="./chroots"
@@ -31,11 +31,11 @@ configure_chroot() {
 	cp /proc/mounts ${chroot_dir}/etc/mtab
 
 	source_list=${chroot_dir}/etc/apt/sources.list
-	echo "deb http://archive.ubuntu.com/ubuntu xenial main restricted universe multiverse" > $source_list
+	echo "deb $repo $release main restricted universe multiverse" > $source_list
 
 	chroot ${chroot_dir} apt-get update
 	chroot ${chroot_dir} apt-get dist-upgrade -y || true
-	chroot ${chroot_dir} apt-get install curl build-essential fpc libsdl2-dev libsdl2-image-dev libsdl2-image-2.0-0 libsdl2-2.0-0 libsdl2-mixer-2.0-0 libsdl2-mixer-dev libsdl2-net-2.0-0 libsdl2-net-dev libsdl2-ttf-2.0-0 libsdl2-ttf-dev libsdl2-gfx-1.0-0 libsdl2-gfx-dev ffmpeg libavdevice-dev libsqlite3-0 libsqlite3-dev libpcre3 libpcre3-dev ttf-dejavu ttf-freefont portaudio19-dev lua5.1-dev libpng16-16 libopencv-highgui-dev libprojectm-dev -y  || true
+	chroot ${chroot_dir} apt-get install build-essential fpc libsdl2-dev libsdl2-image-dev libsdl2-image-2.0-0 libsdl2-2.0-0 libsdl2-mixer-2.0-0 libsdl2-mixer-dev libsdl2-net-2.0-0 libsdl2-net-dev libsdl2-ttf-2.0-0 libsdl2-ttf-dev libsdl2-gfx-1.0-0 libsdl2-gfx-dev ffmpeg libavdevice-dev libsqlite3-0 libsqlite3-dev libpcre3 libpcre3-dev ttf-dejavu ttf-freefont portaudio19-dev lua5.1-dev libpng16-16 libopencv-highgui-dev libprojectm-dev -y  || true
 	cp build.sh ${chroot_dir}
 	cp USDX-src.tar.gz ${chroot_dir}
 }
@@ -69,10 +69,10 @@ main() {
 	mkdir -p ${chroot_path}
 	mkdir -p ${output_path}
 
-	create_chroot ${release} ${arch}
+	LC_ALL=C create_chroot ${release} ${arch}
 	chroot_dir="${chroot_path}/${release}-${arch}"
-	configure_chroot $chroot_dir
-	run_chroot $chroot_dir $libpath
+	LC_ALL=C configure_chroot $chroot_dir
+	LC_ALL=C run_chroot $chroot_dir $libpath
 
 	rm -rf ${output_path}/${libpath} "${output_path}/ultrastardx.${suffix}"
 
@@ -80,6 +80,7 @@ main() {
 	mkdir -p ${output_path}/data
 
 	mv -v ${build_path}/ultrastardx "${output_path}/ultrastardx.${suffix}"
+	rm -rf ${output_path}/${libpath}
 	mv -v ${build_path}/lib ${output_path}/${libpath}
 	cp -r ${build_path}/data/* ${output_path}/data
 	rm -r ${build_path}/data

@@ -34,3 +34,8 @@ clean:
 cleanfull: clean
 	sudo rm -rf chroots
 	rm -rf USDX-src.tar.gz
+
+chroot-64:
+	sudo PATH=$$PATH:/bin:/sbin LC_ALL=C chroot chroots/*-amd64 bash
+chroot-32:
+	sudo PATH=$$PATH:/bin:/sbin LC_ALL=C chroot chroots/*-i386 bash
