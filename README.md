@@ -10,9 +10,9 @@ How to use
 
 First you need to install a few dependencies:
 
-`chroot debootstrap curl linux32`
+`chroot debootstrap linux32 curl rsync`
 
-This requires about 5GB free space.
+This requires about 7GB free space.
 
 To build the game, run `make`.
 

@@ -35,9 +35,18 @@ configure_chroot() {
 
 	chroot ${chroot_dir} apt-get update
 	chroot ${chroot_dir} apt-get dist-upgrade -y || true
-	chroot ${chroot_dir} apt-get install build-essential fpc libsdl2-dev libsdl2-image-dev libsdl2-image-2.0-0 libsdl2-2.0-0 libsdl2-mixer-2.0-0 libsdl2-mixer-dev libsdl2-net-2.0-0 libsdl2-net-dev libsdl2-ttf-2.0-0 libsdl2-ttf-dev libsdl2-gfx-1.0-0 libsdl2-gfx-dev ffmpeg libavdevice-dev libsqlite3-0 libsqlite3-dev libpcre3 libpcre3-dev ttf-dejavu ttf-freefont portaudio19-dev lua5.1-dev libpng16-16 libopencv-highgui-dev libprojectm-dev -y  || true
+	chroot ${chroot_dir} apt-get install -y \
+		fpc ttf-dejavu ttf-freefont liblua5.3-dev libopencv-highgui-dev libprojectm-dev \
+		build-essential autoconf automake \
+		libtool libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev \
+		libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev libxxf86vm-dev \
+		libxss-dev libgl1-mesa-dev libesd0-dev libdbus-1-dev libudev-dev \
+		libgles1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libibus-1.0-dev \
+		fcitx-libs-dev libsamplerate0-dev \
+		libwayland-dev libxkbcommon-dev wayland-protocols || true
 	cp build.sh ${chroot_dir}
-	cp USDX-src.tar.gz ${chroot_dir}
+	echo "Copying src to chroot..."
+	rsync -rz --links src ${chroot_dir} --delete-before
 }
 
 run_chroot() {
@@ -76,7 +85,7 @@ main() {
 
 	rm -rf ${output_path}/${libpath} "${output_path}/ultrastardx.${suffix}"
 
-	build_path="${chroot_dir}/USDX/USDX-*/output"
+	build_path="${chroot_dir}/output"
 	mkdir -p ${output_path}/data
 
 	mv -v ${build_path}/ultrastardx "${output_path}/ultrastardx.${suffix}"
