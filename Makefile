@@ -27,8 +27,10 @@ usdx/BUILD_DATE: usdx/ultrastardx.x86 usdx/ultrastardx.x86_64
 	@cp -v launch.sh usdx/
 	echo "`date -u +%FT%TZ`" > usdx/BUILD_DATE
 	echo "$(VERSION)" > usdx/VERSION
-	cp usdx/lib32/libs.txt libs32.txt
-	cp usdx/lib64/libs.txt libs64.txt
+	echo "32-bit libs:" > libs.txt
+	cat usdx/lib32/libs.txt >> libs.txt
+	echo -e "\n64-bit libs:" >> libs.txt
+	cat usdx/lib64/libs.txt >> libs.txt
 
 compress: usdx-$(VERSION).tar.xz
 usdx-$(VERSION).tar.xz: usdx/ultrastardx.x86 usdx/ultrastardx.x86_64 usdx/BUILD_DATE
