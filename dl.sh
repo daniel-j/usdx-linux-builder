@@ -37,8 +37,8 @@ echo "Downloading SMPEG"
 svn export --force svn://svn.icculus.org/smpeg/tags/release_2_0_0 smpeg
 
 echo "Downloading SQLite"
-mkdir -p "SQLite"
-curl -L "https://sqlite.org/2017/sqlite-autoconf-3170000.tar.gz" | tar -xz -C "SQLite" --strip-components=1
+mkdir -p "sqlite"
+curl -L "https://sqlite.org/2017/sqlite-autoconf-3170000.tar.gz" | tar -xz -C "sqlite" --strip-components=1
 
 echo "Downloading ffmpeg"
 mkdir -p "ffmpeg"
