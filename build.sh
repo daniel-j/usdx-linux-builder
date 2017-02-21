@@ -115,9 +115,7 @@ if [ "$build_deps" -eq 1 ]; then
 		--disable-libx265 \
 		--disable-indevs \
 		--disable-outdevs \
-		--enable-outdev=sdl \
-		--disable-vaapi \
-		--disable-iconv
+		--enable-outdev=sdl
 	make -j4
 	make install
 fi
