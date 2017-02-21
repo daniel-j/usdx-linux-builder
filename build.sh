@@ -124,7 +124,8 @@ echo "Building USDX"
 cd /src/USDX
 bash ./autogen.sh
 ./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
-make LDFLAGS="-O2 --sort-common --as-needed -z relro -shared-libgcc -rpath \\\$\$ORIGIN/$1" datadir="./data" prefix="" bindir="" INSTALL_DATADIR="./data"
+# -rpath \\\$\$ORIGIN/$1
+make LDFLAGS="-O2 --sort-common --as-needed -z relro -shared-libgcc" datadir="./data" prefix="" bindir="" INSTALL_DATADIR="./data"
 rm -rf /output
 make DESTDIR="/output/" datadir="/data" prefix="" bindir="" INSTALL_DATADIR="./data" install
 
