@@ -155,7 +155,7 @@ scan_libs() {
 	done <<< "$libs"
 }
 echo "Scanning and copying libraries..."
-scan_libs game/ultrastardx /output/lib
+scan_libs game/ultrastardx /output/lib | tee /output/lib/libs.txt
 
 #IFS=$'\n' # make newlines the only separator
 #for file in $(ldd output/usr/local/bin/ultrastardx | awk '{print $3}' | grep -w "so")
