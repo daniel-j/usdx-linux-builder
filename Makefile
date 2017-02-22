@@ -22,6 +22,8 @@ build-local: src/
 	@cp -v build.sh root
 	rsync -rzt --links src root --delete-after --update
 	cd root && ./build.sh lib
+run-local:
+	cd root/output && LD_LIBRARY_PATH=lib ./ultrastardx
 
 chroot-32:
 	sudo PATH=$$PATH:/bin:/sbin LC_ALL=C linux32 chroot chroots/*-i386 bash

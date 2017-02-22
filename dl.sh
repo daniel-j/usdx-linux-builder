@@ -4,12 +4,6 @@ set -e
 
 mkdir -p src
 cd src
-
-echo "Downloading ffmpeg"
-mkdir -p "ffmpeg"
-#curl -L "https://ffmpeg.org/releases/ffmpeg-2.8.11.tar.gz" | tar -xz -C "ffmpeg" --strip-components=1
-curl -L "https://github.com/FFmpeg/FFmpeg/archive/n2.8.11.tar.gz" | tar -xz -C "ffmpeg" --strip-components=1
-
 echo "Downloading USDX"
 mkdir -p "USDX"
 curl -L "https://github.com/UltraStar-Deluxe/USDX/archive/$1.tar.gz" | tar -xz -C "USDX" --strip-components=1
@@ -48,6 +42,12 @@ curl -L "https://sqlite.org/2017/sqlite-autoconf-3170000.tar.gz" | tar -xz -C "s
 echo "Downloading Yasm"
 mkdir -p "yasm"
 curl -L "http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz" | tar -xz -C "yasm" --strip-components=1
+
+echo "Downloading ffmpeg"
+mkdir -p "ffmpeg"
+curl -L "https://ffmpeg.org/releases/ffmpeg-2.8.11.tar.gz" | tar -xz -C "ffmpeg" --strip-components=1
+# in case ffmpeg.org is offline:
+#curl -L "https://github.com/FFmpeg/FFmpeg/archive/n2.8.11.tar.gz" | tar -xz -C "ffmpeg" --strip-components=1
 
 echo "Downloading pcre"
 mkdir -p "pcre"
