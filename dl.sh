@@ -5,6 +5,11 @@ set -e
 mkdir -p src
 cd src
 
+echo "Downloading ffmpeg"
+mkdir -p "ffmpeg"
+#curl -L "https://ffmpeg.org/releases/ffmpeg-2.8.11.tar.gz" | tar -xz -C "ffmpeg" --strip-components=1
+curl -L "https://github.com/FFmpeg/FFmpeg/archive/n2.8.11.tar.gz" | tar -xz -C "ffmpeg" --strip-components=1
+
 echo "Downloading USDX"
 mkdir -p "USDX"
 curl -L "https://github.com/UltraStar-Deluxe/USDX/archive/$1.tar.gz" | tar -xz -C "USDX" --strip-components=1
@@ -39,10 +44,6 @@ svn export --force svn://svn.icculus.org/smpeg/tags/release_2_0_0 smpeg
 echo "Downloading SQLite"
 mkdir -p "sqlite"
 curl -L "https://sqlite.org/2017/sqlite-autoconf-3170000.tar.gz" | tar -xz -C "sqlite" --strip-components=1
-
-echo "Downloading ffmpeg"
-mkdir -p "ffmpeg"
-curl -L "https://ffmpeg.org/releases/ffmpeg-2.8.11.tar.gz" | tar -xz -C "ffmpeg" --strip-components=1
 
 echo "Downloading Yasm"
 mkdir -p "yasm"

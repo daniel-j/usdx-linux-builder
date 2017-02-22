@@ -43,10 +43,10 @@ configure_chroot() {
 		libxss-dev libgl1-mesa-dev libesd0-dev libdbus-1-dev libudev-dev \
 		libgles1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libibus-1.0-dev \
 		fcitx-libs-dev libsamplerate0-dev \
-		libwayland-dev libxkbcommon-dev wayland-protocols || true
+		libwayland-dev libxkbcommon-dev wayland-protocols ibus ibus-wayland || true
 	cp build.sh ${chroot_dir}
 	echo "Copying src to chroot..."
-	rsync -rz --links src ${chroot_dir} --delete-before
+	rsync -rzt --links src ${chroot_dir} --delete-after --update -P
 }
 
 run_chroot() {
