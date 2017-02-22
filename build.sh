@@ -12,7 +12,7 @@ PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 mkdir -pv "$PREFIX"
 
-build_deps=0
+build_deps=1
 
 if [ "$build_deps" -eq 1 ]; then
 	rm -rf "$PREFIX"
@@ -43,7 +43,6 @@ if [ "$build_deps" -eq 1 ]; then
 		--enable-video-wayland --enable-wayland-shared \
 		--enable-x11-shared --enable-ibus --enable-fcitx --enable-ime \
 		--disable-rpath
-	read
 	make -j4
 	make install
 	make distclean
