@@ -1,7 +1,7 @@
 VERSION = v1.3.5-beta
 VERSION = master
 
-.PHONY: default source build build-32 build-64 chroot-32 chroot-64 compress clean cleanfull
+.PHONY: default source build build-32 build-64 run build-local run-local chroot-32 chroot-64 compress clean cleanfull
 
 default: compress
 
@@ -16,6 +16,9 @@ usdx/ultrastardx.x86: src/
 build-64: usdx/ultrastardx.x86_64
 usdx/ultrastardx.x86_64: src/
 	sudo ./setup.sh --amd64
+
+run:
+	usdx/launch.sh
 
 build-local: src/
 	@mkdir -pv root
@@ -51,4 +54,4 @@ clean:
 
 cleanfull: clean
 	sudo rm -rf chroots
-	rm -rf src
+	rm -rf src root
