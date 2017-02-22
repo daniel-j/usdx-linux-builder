@@ -36,7 +36,8 @@ configure_chroot() {
 	chroot ${chroot_dir} apt-get update
 	chroot ${chroot_dir} apt-get dist-upgrade -y || true
 	chroot ${chroot_dir} apt-get install -y \
-		fpc ttf-dejavu ttf-freefont liblua5.3-dev libopencv-highgui-dev libprojectm-dev \
+		fpc ttf-dejavu ttf-freefont liblua5.3-dev libopencv-highgui-dev \
+		cmake ftgl-dev libglew-dev \
 		build-essential autoconf automake \
 		libtool libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev \
 		libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev libxxf86vm-dev \
@@ -76,12 +77,13 @@ main() {
 	export PATH=$PATH:/bin:/sbin
 
 	mkdir -p ${chroot_path}
-	mkdir -p ${output_path}
 
 	LC_ALL=C create_chroot ${release} ${arch}
 	chroot_dir="${chroot_path}/${release}-${arch}"
 	LC_ALL=C configure_chroot $chroot_dir
 	LC_ALL=C run_chroot $chroot_dir $libpath
+
+	mkdir -p ${output_path}
 
 	rm -rf ${output_path}/${libpath} "${output_path}/ultrastardx.${suffix}"
 
@@ -90,6 +92,7 @@ main() {
 
 	mv -v ${build_path}/ultrastardx "${output_path}/ultrastardx.${suffix}"
 	rm -rf ${output_path}/${libpath}
+	chmod -x ${build_path}/lib/*.so*
 	mv -v ${build_path}/lib ${output_path}/${libpath}
 	cp -r ${build_path}/data/* ${output_path}/data
 	rm -r ${build_path}/data

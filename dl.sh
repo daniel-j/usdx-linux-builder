@@ -6,7 +6,11 @@ mkdir -p src
 cd src
 echo "Downloading USDX"
 mkdir -p "USDX"
-curl -L "https://github.com/UltraStar-Deluxe/USDX/archive/$1.tar.gz" | tar -xz -C "USDX" --strip-components=1
+#curl -L "https://github.com/UltraStar-Deluxe/USDX/archive/$1.tar.gz" | tar -xz -C "USDX" --strip-components=1
+# temporary fix
+curl -L "https://github.com/daniel-j/USDX/archive/master.tar.gz" | tar -xz -C "USDX" --strip-components=1
+#rsync -rzt --links ../../USDX USDX --delete-after --update
+find "USDX" -type f -name "*.dll" -exec rm -f {} \;
 
 echo "Downloading SDL2"
 mkdir -p "SDL2"
@@ -68,3 +72,7 @@ curl -L "https://sourceforge.net/projects/libpng/files/libpng16/1.6.28/libpng-1.
 #	@echo "Downloading Lua"
 #	@mkdir -p "$@"
 #	@curl -L "https://www.lua.org/ftp/lua-5.3.4.tar.gz" | tar -xz -C "$@" --strip-components=1
+
+#	echo "Downloading projectM"
+#	mkdir -p "projectm"
+#	curl -L "https://sourceforge.net/projects/projectm/files/2.1.0/projectM-complete-2.1.0-Source.tar.gz/download" | tar -xz -C "projectm" --strip-components=1

@@ -4,6 +4,8 @@ set -e
 
 root=$(pwd)
 
+SRC="$root/src"
+OUTPUT="$root/output"
 export SHELL=/bin/bash
 export PREFIX="$root/prefix"
 export PATH="$PREFIX/bin:$PATH"
@@ -12,27 +14,25 @@ PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 mkdir -pv "$PREFIX"
 
-build_deps=1
-
-if [ "$build_deps" -eq 1 ]; then
+if [ ! -e "$PREFIX/built_libs" ]; then
 	rm -rf "$PREFIX"
 
 	echo "Building libpng"
-	cd "$root/src/libpng"
+	cd "$SRC/libpng"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
 	make -j4
 	make install
 	make distclean
 
 	echo "Building FreeType"
-	cd "$root/src/freetype"
+	cd "$SRC/freetype"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
 	make -j4
 	make install
 	make distclean
 
 	echo "Building SDL2"
-	cd "$root/src/SDL2"
+	cd "$SRC/SDL2"
 	bash ./autogen.sh
 	mkdir -p build
 	cd build
@@ -48,7 +48,7 @@ if [ "$build_deps" -eq 1 ]; then
 	make distclean
 
 	echo "Building SMPEG"
-	cd "$root/src/smpeg"
+	cd "$SRC/smpeg"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" CFLAGS="-Wno-narrowing" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
 	make -j4
@@ -56,7 +56,7 @@ if [ "$build_deps" -eq 1 ]; then
 	make distclean
 
 	echo "Building SDL2_mixer"
-	cd "$root/src/SDL2_mixer"
+	cd "$SRC/SDL2_mixer"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-music-mod --disable-music-midi
 	make -j4
@@ -64,7 +64,7 @@ if [ "$build_deps" -eq 1 ]; then
 	make distclean
 
 	echo "Building SDL2_image"
-	cd "$root/src/SDL2_image"
+	cd "$SRC/SDL2_image"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
 	make -j4
@@ -72,7 +72,7 @@ if [ "$build_deps" -eq 1 ]; then
 	make distclean
 
 	echo "Building SDL2_ttf"
-	cd "$root/src/SDL2_ttf"
+	cd "$SRC/SDL2_ttf"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
 	make -j4
@@ -80,7 +80,7 @@ if [ "$build_deps" -eq 1 ]; then
 	make distclean
 
 	echo "Building SDL2_net"
-	cd "$root/src/SDL2_net"
+	cd "$SRC/SDL2_net"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-gui
 	make -j4
@@ -88,7 +88,7 @@ if [ "$build_deps" -eq 1 ]; then
 	make distclean
 
 	echo "Building SDL2_gfx"
-	cd "$root/src/SDL2_gfx"
+	cd "$SRC/SDL2_gfx"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
 	make -j4
@@ -96,35 +96,35 @@ if [ "$build_deps" -eq 1 ]; then
 	make distclean
 
 	echo "Building SQLite"
-	cd "$root/src/sqlite"
+	cd "$SRC/sqlite"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
 	make -j4
 	make install
 	make distclean
 
 	echo "Building PortAudio"
-	cd "$root/src/portaudio"
+	cd "$SRC/portaudio"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
 	make -j4
 	make install
 	make distclean
 
 	echo "Building PCRE"
-	cd "$root/src/pcre"
+	cd "$SRC/pcre"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --enable-unicode-properties --enable-pcre16 --enable-pcre-32 --enable-jit --enable-utf
 	make -j4
 	make install
 	make distclean
 
 	echo "Building Yasm"
-	cd "$root/src/yasm"
+	cd "$SRC/yasm"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-rpath
 	make -j4
 	make install
 	make distclean
 
 	echo "Building FFMPEG"
-	cd "$root/src/ffmpeg"
+	cd "$SRC/ffmpeg"
 	./configure --prefix="$PREFIX" \
 		--enable-gpl \
 		--disable-static \
@@ -143,18 +143,40 @@ if [ "$build_deps" -eq 1 ]; then
 	make -j4
 	make install
 	make distclean
+
+	# echo "Building projectM"
+	# cd "$SRC/projectm"
+	# mkdir -p build
+	# cd build
+	# cmake \
+	# 	-Wno-dev \
+	# 	-DINCLUDE-PROJECTM-QT=0 \
+	# 	-DINCLUDE-PROJECTM-PULSEAUDIO=0 \
+	# 	-DINCLUDE-PROJECTM-LIBVISUAL=0 \
+	# 	-DINCLUDE-PROJECTM-JACK=0 \
+	# 	-DINCLUDE-PROJECTM-TEST=0 \
+	# 	-DINCLUDE-PROJECTM-XMMS=0 \
+	# 	-DCMAKE_INSTALL_PREFIX="$PREFIX" \
+	# 	-DCMAKE_BUILD_TYPE=Release \
+	# 	..
+	# make
+	# make install
+
+	touch "$PREFIX/built_libs"
 fi
 
 echo "Building USDX"
-cd "$root/src/USDX"
+cd "$SRC/USDX"
 bash ./autogen.sh
-./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" # --with-libprojectM
 # -rpath \\\$\$ORIGIN/$1
 make LDFLAGS="-O2 --sort-common --as-needed -z relro -shared-libgcc" datadir="./data" prefix="" bindir="" INSTALL_DATADIR="./data"
-rm -rf "$root/output/"
-make DESTDIR="$root/output/" datadir="/data" prefix="" bindir="" INSTALL_DATADIR="./data" install
+rm -rf "$OUTPUT"
+sleep 1
+make DESTDIR="$OUTPUT/" datadir="/data" prefix="" bindir="" INSTALL_DATADIR="./data" install
+make distclean
 
-mkdir -p "$root/output/lib"
+mkdir -p "$OUTPUT/lib"
 
 scan_libs() {
 	local libs=$(objdump -x "$1" | awk '$1 == "NEEDED" { print $2 }' | grep -E -v '(libc[^_a-zA-Z0-9])|(libm[^_a-zA-Z0-9])|libpthread|(librt[^_a-zA-Z0-9])|(libdl[^_a-zA-Z0-9])|(libcrypt[^_a-zA-Z0-9])|(libutil[^_a-zA-Z0-9])|(libnsl[^_a-zA-Z0-9])|(libresolv[^_a-zA-Z0-9])|libasound|libglib|libgcc_s|libX11|ld-linux|(libstdc\+\+[^_a-zA-Z0-9])')
@@ -178,8 +200,13 @@ scan_libs() {
 		fi
 	done <<< "$libs"
 }
+
 echo "Scanning and copying libraries..."
-scan_libs game/ultrastardx "$root/output/lib" | tee "$root/output/lib/libs.txt"
+scan_libs "$OUTPUT/ultrastardx" "$OUTPUT/lib" | tee "$OUTPUT/lib/libs.txt"
+
+# strip symbols from libs & binary
+find "$OUTPUT/lib" -type f -name "*.so*" -exec strip {} \;
+strip "$OUTPUT/ultrastardx"
 
 #IFS=$'\n' # make newlines the only separator
 #for file in $(ldd output/usr/local/bin/ultrastardx | awk '{print $3}' | grep -w "so")
