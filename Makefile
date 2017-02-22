@@ -1,4 +1,5 @@
 VERSION = v1.3.5-beta
+VERSION = master
 
 .PHONY: default source build build-32 build-64 chroot-32 chroot-64 compress clean cleanfull
 
@@ -15,6 +16,12 @@ usdx/ultrastardx.x86: src/
 build-64: usdx/ultrastardx.x86_64
 usdx/ultrastardx.x86_64: src/
 	sudo ./setup.sh --amd64
+
+build-local: src/
+	@mkdir -pv root
+	@cp -v build.sh root
+	rsync -rzt --links src root --delete-after --update
+	cd root && ./build.sh lib
 
 chroot-32:
 	sudo PATH=$$PATH:/bin:/sbin LC_ALL=C linux32 chroot chroots/*-i386 bash
