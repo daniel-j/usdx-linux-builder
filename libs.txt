@@ -7,7 +7,6 @@
   libSDL2_ttf-2.0.so.0
     libfreetype.so.6
       libpng16.so.16
-        libz.so.1
       libharfbuzz.so.0
         libgraphite2.so.3
   libportaudio.so.2
@@ -28,7 +27,6 @@
   libSDL2_ttf-2.0.so.0
     libfreetype.so.6
       libpng16.so.16
-        libz.so.1
       libharfbuzz.so.0
         libgraphite2.so.3
   libportaudio.so.2
