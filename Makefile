@@ -23,7 +23,8 @@ run:
 build-local: src/
 	@mkdir -pv root
 	@cp -v build.sh root
-	rsync -rzt --links src root --delete-after --update
+	@#rsync -rt --links ../USDX/. src/USDX --delete-after --update
+	rsync -rt --links src root --delete-after --update
 	cd root && ./build.sh lib
 run-local:
 	cd root/output && LD_LIBRARY_PATH=lib ./ultrastardx

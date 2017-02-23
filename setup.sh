@@ -47,7 +47,7 @@ configure_chroot() {
 		libwayland-dev libxkbcommon-dev wayland-protocols ibus ibus-wayland || true
 	cp build.sh ${chroot_dir}
 	echo "Copying src to chroot..."
-	rsync -rzt --links src ${chroot_dir} --delete-after --update -P
+	rsync -rt --links src ${chroot_dir} --delete-after --update -P
 }
 
 run_chroot() {

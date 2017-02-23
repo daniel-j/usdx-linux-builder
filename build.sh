@@ -169,6 +169,7 @@ echo "Building USDX"
 cd "$SRC/USDX"
 bash ./autogen.sh
 ./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" # --with-libprojectM
+sleep 1
 # -rpath \\\$\$ORIGIN/$1
 make LDFLAGS="-O2 --sort-common --as-needed -z relro -shared-libgcc" datadir="./data" prefix="" bindir="" INSTALL_DATADIR="./data"
 rm -rf "$OUTPUT"

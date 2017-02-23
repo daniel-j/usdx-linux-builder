@@ -9,7 +9,6 @@ mkdir -p "USDX"
 #curl -L "https://github.com/UltraStar-Deluxe/USDX/archive/$1.tar.gz" | tar -xz -C "USDX" --strip-components=1
 # temporary fix
 curl -L "https://github.com/daniel-j/USDX/archive/master.tar.gz" | tar -xz -C "USDX" --strip-components=1
-#rsync -rzt --links ../../USDX USDX --delete-after --update
 find "USDX" -type f -name "*.dll" -exec rm -f {} \;
 
 echo "Downloading SDL2"
