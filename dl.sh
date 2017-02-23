@@ -36,7 +36,7 @@ mkdir -p "SDL2_gfx"
 curl -L "http://www.ferzkopp.net/Software/SDL2_gfx/SDL2_gfx-1.0.3.tar.gz" | tar -xz -C "SDL2_gfx" --strip-components=1
 
 echo "Downloading SMPEG"
-svn export --force svn://svn.icculus.org/smpeg/tags/release_2_0_0 smpeg
+svn export --force "svn://svn.icculus.org/smpeg/tags/release_2_0_0" "smpeg"
 
 echo "Downloading SQLite"
 mkdir -p "sqlite"
@@ -52,9 +52,9 @@ curl -L "https://ffmpeg.org/releases/ffmpeg-2.8.11.tar.gz" | tar -xz -C "ffmpeg"
 # in case ffmpeg.org is offline:
 #curl -L "https://github.com/FFmpeg/FFmpeg/archive/n2.8.11.tar.gz" | tar -xz -C "ffmpeg" --strip-components=1
 
-echo "Downloading pcre"
-mkdir -p "pcre"
-curl -L "https://sourceforge.net/projects/pcre/files/pcre/8.40/pcre-8.40.tar.gz/download" | tar -xz -C "pcre" --strip-components=1
+#	echo "Downloading pcre"
+#	mkdir -p "pcre"
+#	curl -L "https://sourceforge.net/projects/pcre/files/pcre/8.40/pcre-8.40.tar.gz/download" | tar -xz -C "pcre" --strip-components=1
 
 echo "Downloading PortAudio"
 mkdir -p "portaudio"

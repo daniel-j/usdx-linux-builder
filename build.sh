@@ -19,14 +19,14 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 
 	echo "Building libpng"
 	cd "$SRC/libpng"
-	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"  --disable-static
 	make -j4
 	make install
 	make distclean
 
 	echo "Building FreeType"
 	cd "$SRC/freetype"
-	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
 	make -j4
 	make install
 	make distclean
@@ -50,7 +50,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	echo "Building SMPEG"
 	cd "$SRC/smpeg"
 	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" CFLAGS="-Wno-narrowing" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" CFLAGS="-Wno-narrowing" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
 	make -j4
 	make install
 	make distclean
@@ -58,7 +58,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	echo "Building SDL2_mixer"
 	cd "$SRC/SDL2_mixer"
 	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-music-mod --disable-music-midi
+	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --disable-music-mod --disable-music-midi
 	make -j4
 	make install
 	make distclean
@@ -66,7 +66,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	echo "Building SDL2_image"
 	cd "$SRC/SDL2_image"
 	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
 	make -j4
 	make install
 	make distclean
@@ -74,7 +74,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	echo "Building SDL2_ttf"
 	cd "$SRC/SDL2_ttf"
 	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
 	make -j4
 	make install
 	make distclean
@@ -82,7 +82,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	echo "Building SDL2_net"
 	cd "$SRC/SDL2_net"
 	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-gui
+	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --disable-gui
 	make -j4
 	make install
 	make distclean
@@ -90,35 +90,35 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	echo "Building SDL2_gfx"
 	cd "$SRC/SDL2_gfx"
 	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
 	make -j4
 	make install
 	make distclean
 
 	echo "Building SQLite"
 	cd "$SRC/sqlite"
-	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
 	make -j4
 	make install
 	make distclean
 
 	echo "Building PortAudio"
 	cd "$SRC/portaudio"
-	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
 	make -j4
 	make install
 	make distclean
 
-	echo "Building PCRE"
-	cd "$SRC/pcre"
-	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --enable-unicode-properties --enable-pcre16 --enable-pcre-32 --enable-jit --enable-utf
-	make -j4
-	make install
-	make distclean
+	#	echo "Building PCRE"
+	#	cd "$SRC/pcre"
+	#	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --enable-utf --enable-unicode-properties
+	#	make -j4
+	#	make install
+	#	make distclean
 
 	echo "Building Yasm"
 	cd "$SRC/yasm"
-	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-rpath
+	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
 	make -j4
 	make install
 	make distclean
@@ -180,34 +180,53 @@ make distclean
 mkdir -p "$OUTPUT/lib"
 
 scan_libs() {
-	local libs=$(objdump -x "$1" | awk '$1 == "NEEDED" { print $2 }' | grep -E -v '(libc[^_a-zA-Z0-9])|(libm[^_a-zA-Z0-9])|libpthread|(librt[^_a-zA-Z0-9])|(libdl[^_a-zA-Z0-9])|(libcrypt[^_a-zA-Z0-9])|(libutil[^_a-zA-Z0-9])|(libnsl[^_a-zA-Z0-9])|(libresolv[^_a-zA-Z0-9])|libasound|libglib|libgcc_s|libX11|ld-linux|(libstdc\+\+[^_a-zA-Z0-9])')
-	if [ -z "$libs" ]; then
-		return
-	fi
+	if [ ! -f "$1" ]; then return; fi
+	local libs=$(objdump -x "$1" | awk '$1 == "NEEDED" { print $2 }' | grep -E -v '(libc[^_a-zA-Z0-9])|(libm[^_a-zA-Z0-9])|libpthread|(librt[^_a-zA-Z0-9])|(libdl[^_a-zA-Z0-9])|(libcrypt[^_a-zA-Z0-9])|(libutil[^_a-zA-Z0-9])|(libnsl[^_a-zA-Z0-9])|(libresolv[^_a-zA-Z0-9])|libasound|libglib|libgcc_s|libX11|ld-linux|(libstdc\+\+[^_a-zA-Z0-9])|(libz[^_a-zA-Z0-9])')
+	if [ -z "$libs" ]; then return; fi
 	local lddoutput=$(ldd "$1")
 	#echo $3${1##*/}
-	local indent="  $3"
-	IFS=$'\n' # make newlines the only separator
+	local indent="  $4"
+	local IFS=$'\n'
 	while read -r file
 	do
+		if [ -z "$file" ]; then continue; fi
 		local filepath=$(echo "$lddoutput" | grep -F "$file" | awk '{print $3}')
 		if [ -e "$filepath" ] && [ ! -e "$2/$file" ]; then
 			echo "$indent$file"
 			cp "$filepath" "$2/"
-			scan_libs "$filepath" "$2" "$indent"
+			scan_libs "$filepath" "$2" "" "$indent"
 		fi
 		if [ ! -e "$filepath" ]; then
 			echo "$filepath not found"
 		fi
 	done <<< "$libs"
+
+	# handle extras
+	local IFS=' '
+	while read -r file
+	do
+		if [ -z "$file" ]; then continue; fi
+		local filepath="$PREFIX/lib/$file"
+		if [ -e "$filepath" ] && [ ! -e "$2/$file" ]; then
+			echo "$indent$file"
+			cp "$filepath" "$2/"
+			scan_libs "$filepath" "$2" "" "$indent"
+		fi
+		if [ ! -e "$filepath" ]; then
+			echo "$filepath not found"
+		fi
+	done <<< "$3"
 }
 
 echo "Scanning and copying libraries..."
 scan_libs "$OUTPUT/ultrastardx" "$OUTPUT/lib" | tee "$OUTPUT/lib/libs.txt"
 
-# strip symbols from libs & binary
-find "$OUTPUT/lib" -type f -name "*.so*" -exec strip {} \;
-strip "$OUTPUT/ultrastardx"
+# strip executable
+strip -s "$OUTPUT/ultrastardx"
+# strip libs
+find "$OUTPUT/lib" -type f -name "*.so*" -exec strip -s {} \;
+# remove rpath from libs
+find "$OUTPUT/lib" -type f -name "*.so*" -exec chrpath --delete --keepgoing {} \;
 
 #IFS=$'\n' # make newlines the only separator
 #for file in $(ldd output/usr/local/bin/ultrastardx | awk '{print $3}' | grep -w "so")

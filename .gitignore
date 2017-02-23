@@ -3,3 +3,4 @@ chroots
 usdx*.tar.xz
 src
 root
+*.log

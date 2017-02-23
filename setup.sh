@@ -36,7 +36,7 @@ configure_chroot() {
 	chroot ${chroot_dir} apt-get update
 	chroot ${chroot_dir} apt-get dist-upgrade -y || true
 	chroot ${chroot_dir} apt-get install -y \
-		fpc ttf-dejavu ttf-freefont liblua5.3-dev libopencv-highgui-dev \
+		fpc ttf-dejavu ttf-freefont libpcre3 libpcre3-dev liblua5.3-dev libopencv-highgui-dev \
 		cmake ftgl-dev libglew-dev \
 		build-essential autoconf automake \
 		libtool libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev \
@@ -44,7 +44,8 @@ configure_chroot() {
 		libxss-dev libgl1-mesa-dev libesd0-dev libdbus-1-dev libudev-dev \
 		libgles1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libibus-1.0-dev \
 		fcitx-libs-dev libsamplerate0-dev \
-		libwayland-dev libxkbcommon-dev wayland-protocols ibus ibus-wayland || true
+		libwayland-dev libxkbcommon-dev wayland-protocols ibus ibus-wayland \
+		chrpath || true
 	cp build.sh ${chroot_dir}
 	echo "Copying src to chroot..."
 	rsync -rt --links src ${chroot_dir} --delete-after --update -P
@@ -54,7 +55,7 @@ run_chroot() {
 	chroot_dir=$1
 	chroot ${chroot_dir} ldconfig
 	echo "Running build..."
-	chroot ${chroot_dir} /build.sh $2
+	chroot ${chroot_dir} /build.sh $2 | tee build.$3.log
 }
 
 main() {
@@ -81,7 +82,7 @@ main() {
 	LC_ALL=C create_chroot ${release} ${arch}
 	chroot_dir="${chroot_path}/${release}-${arch}"
 	LC_ALL=C configure_chroot $chroot_dir
-	LC_ALL=C run_chroot $chroot_dir $libpath
+	LC_ALL=C run_chroot $chroot_dir $libpath $suffix
 
 	mkdir -p ${output_path}
 

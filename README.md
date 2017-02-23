@@ -10,7 +10,7 @@ How to use
 
 First you need to install a few dependencies:
 
-`chroot debootstrap linux32 curl rsync`
+`chroot debootstrap linux32 curl rsync chrpath`
 
 This requires about 7GB free space.
 
