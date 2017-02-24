@@ -104,7 +104,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 
 	echo "Building PortAudio"
 	cd "$SRC/portaudio"
-	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
+	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --enable-cxx
 	make -j4
 	make install
 	make distclean
