@@ -3,7 +3,7 @@
 set -e
 
 repo="http://archive.ubuntu.com/ubuntu"
-release="xenial"
+release="trusty"
 
 chroot_path="./chroots"
 output_path="./usdx"
@@ -33,10 +33,14 @@ configure_chroot() {
 	source_list=${chroot_dir}/etc/apt/sources.list
 	echo "deb $repo $release main restricted universe multiverse" > $source_list
 
+	# Add fpc3 ppa
+	echo "deb http://ppa.launchpad.net/ok2cqr/lazarus/ubuntu $release main" >> $source_list
+	chroot ${chroot_dir} apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 13CA184A
+
 	chroot ${chroot_dir} apt-get update
 	chroot ${chroot_dir} apt-get dist-upgrade -y || true
 	chroot ${chroot_dir} apt-get install -y \
-		fpc ttf-dejavu ttf-freefont libpcre3 libpcre3-dev liblua5.3-dev libopencv-highgui-dev \
+		fpc ttf-dejavu ttf-freefont libpcre3 libpcre3-dev liblua5.1-dev libopencv-highgui-dev \
 		cmake ftgl-dev libglew-dev \
 		build-essential autoconf automake \
 		libtool libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev \
@@ -44,7 +48,7 @@ configure_chroot() {
 		libxss-dev libgl1-mesa-dev libesd0-dev libdbus-1-dev libudev-dev \
 		libgles1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libibus-1.0-dev \
 		fcitx-libs-dev libsamplerate0-dev \
-		libwayland-dev libxkbcommon-dev wayland-protocols ibus ibus-wayland \
+		libwayland-dev libxkbcommon-dev ibus \
 		chrpath || true
 	cp build.sh ${chroot_dir}
 	echo "Copying src to chroot..."

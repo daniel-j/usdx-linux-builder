@@ -14,20 +14,23 @@ PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 mkdir -pv "$PREFIX"
 
+# multicore compilation
+makearg="-j2"
+
 if [ ! -e "$PREFIX/built_libs" ]; then
 	rm -rf "$PREFIX"
 
 	echo "Building libpng"
 	cd "$SRC/libpng"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH"  --disable-static
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
 	echo "Building FreeType"
 	cd "$SRC/freetype"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
@@ -43,7 +46,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 		--enable-video-wayland --enable-wayland-shared \
 		--enable-x11-shared --enable-ibus --enable-fcitx --enable-ime \
 		--disable-rpath
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
@@ -51,7 +54,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	cd "$SRC/smpeg"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" CFLAGS="-Wno-narrowing" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
@@ -59,7 +62,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	cd "$SRC/SDL2_mixer"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --disable-music-mod --disable-music-midi
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
@@ -67,7 +70,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	cd "$SRC/SDL2_image"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
@@ -75,7 +78,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	cd "$SRC/SDL2_ttf"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
@@ -83,7 +86,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	cd "$SRC/SDL2_net"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --disable-gui
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
@@ -91,35 +94,35 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	cd "$SRC/SDL2_gfx"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
 	echo "Building SQLite"
 	cd "$SRC/sqlite"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
 	echo "Building PortAudio"
 	cd "$SRC/portaudio"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
 	#	echo "Building PCRE"
 	#	cd "$SRC/pcre"
 	#	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --enable-utf --enable-unicode-properties
-	#	make -j4
+	#	make "$makearg"
 	#	make install
 	#	make distclean
 
 	echo "Building Yasm"
 	cd "$SRC/yasm"
 	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
@@ -140,7 +143,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 		--disable-indevs \
 		--disable-outdevs \
 		--enable-outdev=sdl
-	make -j4
+	make "$makearg"
 	make install
 	make distclean
 
