@@ -12,10 +12,12 @@ src/:
 build-32: usdx/ultrastardx.x86
 usdx/ultrastardx.x86: src/
 	sudo linux32 ./setup.sh --i386
+	@cp -v launch.sh usdx/
 
 build-64: usdx/ultrastardx.x86_64
 usdx/ultrastardx.x86_64: src/
 	sudo ./setup.sh --amd64
+	@cp -v launch.sh usdx/
 
 run:
 	usdx/launch.sh

@@ -16,7 +16,7 @@
     liblzma.so.5
   libavformat.so.56
   libswscale.so.3
-  liblua5.3.so.0
+  liblua5.1.so.0
 
 64-bit libs:
   libsqlite3.so.0
@@ -36,4 +36,4 @@
     liblzma.so.5
   libavformat.so.56
   libswscale.so.3
-  liblua5.3.so.0
+  liblua5.1.so.0
