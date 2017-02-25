@@ -40,7 +40,7 @@ configure_chroot() {
 	chroot ${chroot_dir} apt-get update
 	chroot ${chroot_dir} apt-get dist-upgrade -y || true
 	chroot ${chroot_dir} apt-get install -y \
-		fpc ttf-dejavu ttf-freefont libpcre3 libpcre3-dev liblua5.1-dev libopencv-highgui-dev \
+		fpc libpcre3 libpcre3-dev liblua5.1-dev libopencv-highgui-dev \
 		cmake ftgl-dev libglew-dev \
 		build-essential autoconf automake \
 		libtool libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev \
