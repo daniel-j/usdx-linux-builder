@@ -40,12 +40,15 @@ build: usdx/BUILD_DATE
 usdx/BUILD_DATE: usdx/ultrastardx.x86 usdx/ultrastardx.x86_64
 	@mkdir -p usdx/data/songs
 	@cp -v launch.sh usdx/
-	echo "`date -u +%FT%TZ`" > usdx/BUILD_DATE
-	echo "$(VERSION)" > usdx/VERSION
+	@cp -v src/USDX/VERSION usdx/VERSION
+	@cp -v libs.txt usdx/libs.txt
+	@cp -v src/USDX/LICENSE usdx/
+	@cp -v src/USDX/game/LICENSE.* usdx/
 	echo "32-bit libs:" > libs.txt
 	cat usdx/lib32/libs.txt >> libs.txt
 	echo -e "\n64-bit libs:" >> libs.txt
 	cat usdx/lib64/libs.txt >> libs.txt
+	echo "`date -u +%FT%TZ`" > usdx/BUILD_DATE
 
 compress: usdx-$(VERSION).tar.xz
 usdx-$(VERSION).tar.xz: usdx/ultrastardx.x86 usdx/ultrastardx.x86_64 usdx/BUILD_DATE
