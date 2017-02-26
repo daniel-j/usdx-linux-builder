@@ -7,13 +7,10 @@
   libSDL2_ttf-2.0.so.0
     libfreetype.so.6
       libpng16.so.16
-      libharfbuzz.so.0
-        libgraphite2.so.3
   libportaudio.so.2
   libavcodec.so.56
     libswresample.so.1
       libavutil.so.54
-    liblzma.so.5
   libavformat.so.56
   libswscale.so.3
   liblua5.1.so.0
@@ -27,13 +24,10 @@
   libSDL2_ttf-2.0.so.0
     libfreetype.so.6
       libpng16.so.16
-      libharfbuzz.so.0
-        libgraphite2.so.3
   libportaudio.so.2
   libavcodec.so.56
     libswresample.so.1
       libavutil.so.54
-    liblzma.so.5
   libavformat.so.56
   libswscale.so.3
   liblua5.1.so.0

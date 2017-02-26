@@ -13,7 +13,6 @@ export LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH"
 PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 mkdir -pv "$PREFIX"
-makearg="-j2"
 
 # multicore compilation
 makearg="-j2"
@@ -30,7 +29,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 
 	echo "Building FreeType"
 	cd "$SRC/freetype"
-	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
+	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --with-harfbuzz=no --with-png=yes
 	make $makearg
 	make install
 	make distclean
@@ -108,7 +107,7 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 
 	echo "Building PortAudio"
 	cd "$SRC/portaudio"
-	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --enable-cxx
+	./configure --prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
 	make $makearg
 	make install
 	make distclean
@@ -150,7 +149,8 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 		--disable-muxers \
 		--disable-bsfs \
 		--disable-filters \
-		--disable-protocols
+		--disable-protocols \
+		--disable-lzma
 	make $makearg
 	make install
 	make distclean
