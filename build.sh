@@ -202,10 +202,12 @@ scan_libs() {
 	do
 		if [ -z "$file" ]; then continue; fi
 		local filepath=$(echo "$lddoutput" | grep -F "$file" | awk '{print $3}')
-		if [ -e "$filepath" ] && [ ! -e "$2/$file" ]; then
+		if [ -e "$filepath" ]; then
 			echo "$indent$file"
-			cp "$filepath" "$2/"
-			scan_libs "$filepath" "$2" "" "$indent"
+			if [ -e "$filepath" ] && [ ! -e "$2/$file" ]; then
+				cp "$filepath" "$2/"
+				scan_libs "$filepath" "$2" "" "$indent"
+			fi
 		fi
 		if [ ! -e "$filepath" ]; then
 			echo "$filepath not found"
