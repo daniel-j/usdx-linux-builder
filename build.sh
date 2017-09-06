@@ -50,48 +50,8 @@ if [ ! -e "$PREFIX/built_libs" ]; then
 	make install
 	make distclean
 
-	echo "Building SMPEG"
-	cd "$SRC/smpeg"
-	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" CFLAGS="-Wno-narrowing" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make $makearg
-	make install
-	make distclean
-
-	echo "Building SDL2_mixer"
-	cd "$SRC/SDL2_mixer"
-	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --disable-music-mod --disable-music-midi
-	make $makearg
-	make install
-	make distclean
-
 	echo "Building SDL2_image"
 	cd "$SRC/SDL2_image"
-	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make $makearg
-	make install
-	make distclean
-
-	echo "Building SDL2_ttf"
-	cd "$SRC/SDL2_ttf"
-	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
-	make $makearg
-	make install
-	make distclean
-
-	echo "Building SDL2_net"
-	cd "$SRC/SDL2_net"
-	bash ./autogen.sh
-	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static --disable-gui
-	make $makearg
-	make install
-	make distclean
-
-	echo "Building SDL2_gfx"
-	cd "$SRC/SDL2_gfx"
 	bash ./autogen.sh
 	./configure --prefix="$PREFIX" --with-sdl-prefix="$PREFIX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" --disable-static
 	make $makearg

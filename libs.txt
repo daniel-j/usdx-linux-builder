@@ -3,27 +3,20 @@
   libSDL2-2.0.so.0
   libSDL2_image-2.0.so.0
     libSDL2-2.0.so.0
-  libSDL2_mixer-2.0.so.0
-    libsmpeg2-2.0.so.0
-      libSDL2-2.0.so.0
-    libSDL2-2.0.so.0
-  libSDL2_ttf-2.0.so.0
-    libfreetype.so.6
-      libpng16.so.16
-    libSDL2-2.0.so.0
   libfreetype.so.6
+    libpng16.so.16
   libportaudio.so.2
-  libavcodec.so.56
-    libswresample.so.1
-      libavutil.so.54
-    libavutil.so.54
-  libavformat.so.56
-    libavcodec.so.56
-    libavutil.so.54
-  libavutil.so.54
-  libswresample.so.1
-  libswscale.so.3
-    libavutil.so.54
+  libavcodec.so.57
+    libswresample.so.2
+      libavutil.so.55
+    libavutil.so.55
+  libavformat.so.57
+    libavcodec.so.57
+    libavutil.so.55
+  libavutil.so.55
+  libswresample.so.2
+  libswscale.so.4
+    libavutil.so.55
   liblua5.1.so.0
 
 64-bit libs:
@@ -31,25 +24,18 @@
   libSDL2-2.0.so.0
   libSDL2_image-2.0.so.0
     libSDL2-2.0.so.0
-  libSDL2_mixer-2.0.so.0
-    libsmpeg2-2.0.so.0
-      libSDL2-2.0.so.0
-    libSDL2-2.0.so.0
-  libSDL2_ttf-2.0.so.0
-    libfreetype.so.6
-      libpng16.so.16
-    libSDL2-2.0.so.0
   libfreetype.so.6
+    libpng16.so.16
   libportaudio.so.2
-  libavcodec.so.56
-    libswresample.so.1
-      libavutil.so.54
-    libavutil.so.54
-  libavformat.so.56
-    libavcodec.so.56
-    libavutil.so.54
-  libavutil.so.54
-  libswresample.so.1
-  libswscale.so.3
-    libavutil.so.54
+  libavcodec.so.57
+    libswresample.so.2
+      libavutil.so.55
+    libavutil.so.55
+  libavformat.so.57
+    libavcodec.so.57
+    libavutil.so.55
+  libavutil.so.55
+  libswresample.so.2
+  libswscale.so.4
+    libavutil.so.55
   liblua5.1.so.0

@@ -39,27 +39,34 @@ configure_chroot() {
 
 	chroot ${chroot_dir} apt-get update
 	chroot ${chroot_dir} apt-get dist-upgrade -y || true
-	chroot ${chroot_dir} apt-get install -y \
-		fpc libpcre3 libpcre3-dev liblua5.1-dev libopencv-highgui-dev \
-		cmake ftgl-dev libglew-dev \
-		build-essential autoconf automake \
-		libtool libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev \
-		libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev libxxf86vm-dev \
-		libxss-dev libgl1-mesa-dev libesd0-dev libdbus-1-dev libudev-dev \
-		libgles1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libibus-1.0-dev \
-		fcitx-libs-dev libsamplerate0-dev \
-		libwayland-dev libxkbcommon-dev ibus \
-		chrpath || true
-	cp build.sh ${chroot_dir}
+	chroot ${chroot_dir} apt-get install -y git || true
+	# chroot ${chroot_dir} apt-get install -y \
+	# 	fpc libpcre3 libpcre3-dev liblua5.1-dev libopencv-highgui-dev \
+	# 	cmake ftgl-dev libglew-dev \
+	# 	build-essential autoconf automake \
+	# 	libtool libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev \
+	# 	libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev libxxf86vm-dev \
+	# 	libxss-dev libgl1-mesa-dev libesd0-dev libdbus-1-dev libudev-dev \
+	# 	libgles1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libibus-1.0-dev \
+	# 	fcitx-libs-dev libsamplerate0-dev \
+	# 	libwayland-dev libxkbcommon-dev ibus \
+	# 	chrpath || true
+	# cp build.sh ${chroot_dir}
 	echo "Copying src to chroot..."
 	rsync -rt --links src ${chroot_dir} --delete-after --update -P
+	yes | chroot ${chroot_dir} /src/USDX/tools/travis/install.sh || true
 }
 
 run_chroot() {
 	chroot_dir=$1
 	chroot ${chroot_dir} ldconfig
 	echo "Running build..."
-	chroot ${chroot_dir} /build.sh $2 | tee build.$3.log
+	chroot ${chroot_dir} bash -c 'cd /src/USDX/dists/linux && make build' | tee build.$3.log
+}
+
+clean_chroot() {
+	chroot_dir=$1
+	chroot ${chroot_dir} bash -c 'cd /src/USDX/dists/linux && make clean'
 }
 
 main() {
@@ -92,17 +99,18 @@ main() {
 
 	rm -rf ${output_path}/${libpath} "${output_path}/ultrastardx.${suffix}"
 
-	build_path="${chroot_dir}/output"
+	build_path="${chroot_dir}/src/USDX/dists/linux/output"
 	mkdir -p ${output_path}/data
 
 	mv -v ${build_path}/ultrastardx "${output_path}/ultrastardx.${suffix}"
-	rm -rf ${output_path}/${libpath}
 	chmod -x ${build_path}/lib/*.so*
 	mv -v ${build_path}/lib ${output_path}/${libpath}
 	cp -r ${build_path}/data/* ${output_path}/data
 	rm -r ${build_path}/data
 
 	chown $SUDO_UID:$SUDO_GID ${output_path} -R
+
+	LC_ALL=C clean_chroot $chroot_dir
 }
 
 main $@

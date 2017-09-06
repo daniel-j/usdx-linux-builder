@@ -1,5 +1,5 @@
 #VERSION = v1.3.5-beta
-VERSION = master
+VERSION = v2017.8.0
 
 .PHONY: default source build build-32 build-64 run build-local run-local chroot-32 chroot-64 compress clean cleanfull
 
