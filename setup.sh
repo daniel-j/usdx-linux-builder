@@ -39,7 +39,7 @@ configure_chroot() {
 
 	chroot ${chroot_dir} apt-get update
 	chroot ${chroot_dir} apt-get dist-upgrade -y || true
-	chroot ${chroot_dir} apt-get install -y git || true
+	chroot ${chroot_dir} apt-get install -y git unzip || true
 	# chroot ${chroot_dir} apt-get install -y \
 	# 	fpc libpcre3 libpcre3-dev liblua5.1-dev libopencv-highgui-dev \
 	# 	cmake ftgl-dev libglew-dev \
